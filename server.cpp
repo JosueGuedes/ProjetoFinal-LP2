@@ -22,6 +22,7 @@ void *testeThread(void *arg)
     pthread_exit(NULL);
 }
 
+
 int main()
 {
     pthread_t threads[5];
