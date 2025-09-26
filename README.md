@@ -5,4 +5,4 @@ Esta primeira entrega do projeto final da disciplina de Linguagem de Programaç�
 O tópico escolhido para desenvolvimento foi o tópico A: O servidor de chat multiusuário em TCP.
 
 #### Diagrama do funcionamento básico do projeto:
-[Diagrama do Projeto](DiagramaProjetoLP2.jpeg)
+[Diagrama do Projeto](/DiagramaProjetoLP2.jpeg)
