@@ -6,3 +6,10 @@ O tópico escolhido para desenvolvimento foi o tópico A: O servidor de chat mul
 
 #### Diagrama do funcionamento básico do projeto:
 ![Diagrama do Projeto](DiagramaProjetoLP2.jpeg)
+
+#### Instruções de compilação
+Compilação:
+g++ server.cpp -o server
+
+Execução:
+./server.cpp
