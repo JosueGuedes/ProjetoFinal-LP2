@@ -4,7 +4,7 @@
 O tema escolhido para o projeto em mão foi o Tema A: Um chat multiusuário utilizando de sockets.
 
 ### Diagrama da arquitetura do projeto (FASE I)
-![Diagrama da arquitetura do projeto](/DiagramaFase1.jpg)
+![Diagrama da arquitetura do projeto](https://github.com/JosueGuedes/ProjetoFinal-LP2/blob/main/DiagramaFase1.png)
 
 ### Instruções de compilação
 Basta digitar `make` no terminal para compilar cliente.cpp e server.cpp
