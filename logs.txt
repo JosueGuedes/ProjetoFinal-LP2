@@ -1,10 +1,12 @@
-[ERROR] Thread 3 escreveu!
-[ERROR] Thread 2 escreveu!
-[WARN] Thread 2 fez um warn!
-[ERROR] Thread 1 escreveu!
-[WARN] Thread 1 fez um warn!
-[WARN] Thread 3 fez um warn!
-[ERROR] Thread 4 escreveu!
-[WARN] Thread 4 fez um warn!
-[ERROR] Thread 5 escreveu!
-[WARN] Thread 5 fez um warn!
+
+[INFO] [CLIENTE] Conectado ao servidor!
+
+[INFO] [CLIENTE] Recebido: [Socket 5]: [CLIENTE] Numero gerado: 0
+
+
+[INFO] [CLIENTE] Recebido: [Socket 6]: [CLIENTE] Numero gerado: 4
+
+
+[INFO] [CLIENTE] - Servidor desconectado!
+
+[INFO] [CLIENTE] Saindo...

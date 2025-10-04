@@ -6,11 +6,13 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <cstdlib>
+#include <ctime>
 
 #define PORT 7000
 #define BUFFER_SIZE 1024
 
 int sock;
+pthread_mutex_t sock_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *receber_mensagem(void *arg)
 {
@@ -18,29 +20,28 @@ void *receber_mensagem(void *arg)
     while (true)
     {
         memset(buffer, 0, BUFFER_SIZE);
-        int bytes = recv(sock, buffer, BUFFER_SIZE - 1, 0);
 
-        // Servidor desconectou-se
+        pthread_mutex_lock(&sock_mutex);
+        int bytes = recv(sock, buffer, BUFFER_SIZE - 1, 0);
+        pthread_mutex_unlock(&sock_mutex);
+
         if (bytes <= 0)
         {
             log_info("[CLIENTE] - Servidor desconectado!");
-            close(sock);
-            exit(0);
+            break;
         }
 
         buffer[bytes] = '\0';
-        log_info("[CLIENTE] Mensagem recebida: " + std::string(buffer));
+        log_info("[CLIENTE] Recebido: " + std::string(buffer));
     }
-
     return nullptr;
 }
 
 int main()
 {
-    struct sockaddr_in server_address;
-    // char buffer[BUFFER_SIZE] = {0};
+    srand(time(NULL) ^ getpid()); // random diferente em cada processo
 
-    // Criação de socket
+    struct sockaddr_in server_address;
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         log_error("[CLIENTE] - Erro ao criar socket");
@@ -50,10 +51,9 @@ int main()
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(PORT);
 
-    // Configuração de IP (Localhost)
     if (inet_pton(AF_INET, "127.0.0.1", &server_address.sin_addr) <= 0)
     {
-        log_error("[CLIENTE] - Endereço invalido");
+        log_error("[CLIENTE] - Endereço inválido");
         return -1;
     }
 
@@ -63,26 +63,32 @@ int main()
         return -1;
     }
 
-    log_info("[CLIENTE] - Conectado ao servidor!");
+    log_info("[CLIENTE] Conectado ao servidor!");
 
-    pthread_t thread_receptora;
-    pthread_create(&thread_receptora, nullptr, receber_mensagem, nullptr);
-    pthread_detach(thread_receptora);
+    pthread_t t_recv;
+    pthread_create(&t_recv, nullptr, receber_mensagem, nullptr);
 
+    // Thread principal só manda mensagens
     while (true)
     {
-        std::string mensagem;
-        cout << ">> Digite a mensagem: ";
-        std::getline(std::cin, mensagem);
+        int num = rand() % 10;
+        std::string mensagem = "[CLIENTE] Numero gerado: " + std::to_string(num) + "\n";
 
-        if (mensagem == "/sair")
+        pthread_mutex_lock(&sock_mutex);
+        send(sock, mensagem.c_str(), mensagem.size(), 0);
+        pthread_mutex_unlock(&sock_mutex);
+
+        if (num == 0)
         {
-            log_info("[CLIENTE] Saindo . . .");
+            log_info("[CLIENTE] Saindo...");
+            pthread_mutex_lock(&sock_mutex);
+            shutdown(sock, SHUT_RDWR); // força recv a retornar
             close(sock);
+            pthread_mutex_unlock(&sock_mutex);
             break;
         }
 
-        send(sock, mensagem.c_str(), mensagem.size(), 0);
+        sleep(1); // intervalo entre mensagens
     }
 
     return 0;

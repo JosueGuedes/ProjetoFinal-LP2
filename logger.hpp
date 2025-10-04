@@ -22,7 +22,7 @@ void write_log(const std::string &msg)
 void log_info(const std::string &msg)
 {
     pthread_mutex_lock(&logger_mutex);
-    std::string log = "[ERROR] " + msg + std::string("\n");
+    std::string log = "\n[INFO] " + msg + std::string("\n");
     cout << log;
     write_log(log);
     pthread_mutex_unlock(&logger_mutex);
@@ -31,7 +31,7 @@ void log_info(const std::string &msg)
 void log_warn(const std::string &msg)
 {
     pthread_mutex_lock(&logger_mutex);
-    std::string log = "[WARN] " + msg + std::string("\n");
+    std::string log = "\n[WARN] " + msg + std::string("\n");
     cout << log;
     write_log(log);
     pthread_mutex_unlock(&logger_mutex);
@@ -40,7 +40,7 @@ void log_warn(const std::string &msg)
 void log_debug(const std::string &msg)
 {
     pthread_mutex_lock(&logger_mutex);
-    std::string log = "[DEBUG] " + msg + std::string("\n");
+    std::string log = "\n[DEBUG] " + msg + std::string("\n");
     cout << log;
     write_log(log);
     pthread_mutex_unlock(&logger_mutex);
@@ -49,7 +49,7 @@ void log_debug(const std::string &msg)
 void log_error(const std::string &msg)
 {
     pthread_mutex_lock(&logger_mutex);
-    std::string log = "[ERROR] " + msg + std::string("\n");
+    std::string log = "\n[ERROR] " + msg + std::string("\n");
     cout << log;
     write_log(log);
     pthread_mutex_unlock(&logger_mutex);
