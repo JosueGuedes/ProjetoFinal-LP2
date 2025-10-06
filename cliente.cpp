@@ -63,6 +63,23 @@ int main()
         return -1;
     }
 
+    int id_sala = -1;
+    do
+    {
+        std::cout << ">>> Digite o id da sala (0 - 4): ";
+        std::cin >> id_sala;
+        std::cin.ignore(); // limpa o buffer
+    } while (id_sala < 0 || id_sala > 4);
+
+    // Envia o ID da sala ao servidor
+    int id_sala_network = htonl(id_sala);
+    if(send(sock, &id_sala_network, sizeof(id_sala_network), 0) < 0){
+        log_error("[CLIENTE] - Erro ao enviar id da sala");
+        close(sock);
+        return -1;
+    }
+    
+
     log_info("[CLIENTE] - Conectado ao servidor!");
 
     pthread_t thread_receptora;
