@@ -4,7 +4,7 @@ O sistema implementa um sistema simples de comunicação multi-usuários utiliza
 
 
 ## Diagrama Cliente-Servidor
-![Diagrama da arquitetura do projeto](https://github.com/JosueGuedes/ProjetoFinal-LP2/blob/main/DiagramaFinal.png)
+![Diagrama da arquitetura do projeto](https://github.com/JosueGuedes/ProjetoFinal-LP2/blob/main/DiagramaFinal.jpeg)
 
 ## Mapeamento de requisitos:
 ### De tema
